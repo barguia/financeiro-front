@@ -14,15 +14,34 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
   name: "Login",
-  data: {
-    user: {}
+  data() {
+    return {
+      user: {}
+    }
+  },
+  created() {
+    let user = sessionStorage.getItem('user')
+    if (user) {
+      this.$router.push('/')
+    }
   },
   methods: {
     logar() {
+      this.$http.post('/login', this.user)
+        .then((result) => {
+          let user = result.data
+          if (user && user.access_token) {
+            sessionStorage.setItem('user', JSON.stringify(user))
+            this.$router.push('/')
+            return;
+          }
+          alert('Login inválido')
+        })
+        .catch((errors) => console.log(errors))
+
 
     }
   }

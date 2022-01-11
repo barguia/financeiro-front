@@ -10,9 +10,10 @@ export default {
   props: ['col', 'offset', 'size'],
   methods: {
     getClass() {
-      let classe = 'col';
+      var classe = 'col';
+
       classe += this.col ? `-${this.size}-${this.col}` : '';
-      classe = this.offset ? ` col-${this.size}-offset-md-${this.offset}` : '';
+      classe += this.offset ? ` col-${this.size}-offset-md-${this.offset}` : '';
       return classe;
     }
   }
